@@ -1,13 +1,9 @@
 <template>
-  <v-app>
+  <v-app style="background-color: #F7F8FA; color: #2E2E2E;">
     <v-app-bar title="TinyWins" />
     <v-main>
       <v-container class="py-8">
-        <v-card>
-          <v-card-title>System CHeck</v-card-title>
-          <v-card-text> Backend says {{health}}</v-card-text>
-        </v-card>
-
+        <router-view/>
       </v-container>
     </v-main>
   </v-app>
