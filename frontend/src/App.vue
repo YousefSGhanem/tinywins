@@ -1,6 +1,16 @@
 <template>
-  <h1>You did it!</h1>
-  <p> Backend says: {{health}}</p>
+  <v-app>
+    <v-app-bar title="TinyWins" />
+    <v-main>
+      <v-container class="py-8">
+        <v-card>
+          <v-card-title>System CHeck</v-card-title>
+          <v-card-text> Backend says {{health}}</v-card-text>
+        </v-card>
+
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 

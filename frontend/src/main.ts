@@ -1,9 +1,8 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import 'vuetify/styles'
-import {createVuetify} from 'vuetify'
+import vuetify from './plugins/vuetify.ts';
 
 createApp(App)
-  .use(createVuetify())
+  .use(vuetify)
   .mount('#app')
