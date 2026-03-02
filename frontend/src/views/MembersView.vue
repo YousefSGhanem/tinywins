@@ -1,18 +1,47 @@
 <template>
+  <v-card color="surface" elevation="0" class="mb-6">
+    <v-card-title class="d-flex align-center">
+      <v-icon class="mr-2">mdi-account-group</v-icon>
+      Members
+
+      <v-spacer/>
+
+      <v-btn
+        v-if="appState.isParentMode"
+        color="secondary"
+        variant="flat"
+        prepend-icon="mdi-plus"
+      >
+        Add Member
+      </v-btn>
+    </v-card-title>
+
+    <v-card-subtitle>
+      <v-chip
+        size="small"
+        variant="tonal"
+        :color= "appState.isParentMode ? 'primary' : 'accent' "
+      >
+        {{ appState.isParentMode ? 'Parent' : 'Child' }}
+      </v-chip>
+    </v-card-subtitle>
+  </v-card>
+
   <v-row>
     <v-col
       v-for="member in visibleMembers"
-      :key="member.name"
+      :key="member.id"
       cols="12"
       sm="6"
-      md="4">
-      <MemberCard :name="member.name" :color="member.color" :role-type="member.roleType"/>
+      md="4"
+    >
+      <MemberCard
+        :name="member.name"
+        :color="member.color"
+        :role-type="member.roleType"
+      />
     </v-col>
   </v-row>
-
-  <v-alert v-if="appState.isParentMode" class="mt-6" type="info" variant="tonal">
-    Parent Mode is ON: admin features will appear here later.
-  </v-alert>
 </template>
 
 
@@ -20,18 +49,11 @@
 import MemberCard from '../components/MemberCard.vue'
 import {computed} from 'vue'
 import {appState} from '../state/appState'
+import {membersState} from '../state/membersState'
 
-
-const members = [
-  {name: 'Zayneb' , color: 'secondary', roleType: 'CHILD'},
-  {name: 'Jamal' , color: 'primary', roleType: 'CHILD'},
-  {name: 'Basma' , color: 'accent', roleType: 'CHILD'},
-  {name:'Mom', color: 'primary', roleType: 'PARENT'}
-]
-
-const visibleMembers = computed( () => {
-  if (appState.isParentMode) return members
-  return members.filter(member => member.roleType === 'CHILD')
+const visibleMembers = computed(() => {
+  if( appState.isParentMode) return membersState.members
+  return membersState.members.filter(m => m.roleType === 'CHILD')
 })
 
 </script>

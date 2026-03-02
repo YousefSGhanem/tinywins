@@ -1,23 +1,40 @@
 <template>
-  <v-card :color="color" class="pa-4 text-center" elvation="4">
-    <div class="d-flex justify-end">
+  <v-card :color="props.color" elevation="4">
+    <v-card-title class="d-flex align-center">
       <v-chip
-        v-if="showRoleBadge"
+        v-if="showAdmin"
         size="small"
+        variant="tonal"
         color="soft-background"
-        text-color="test-primary"
       >
-        {{ props.roleType }}
+        {{ props.roleType}}
       </v-chip>
-    </div>
 
-    <v-avatar size="64" class="mb-3">
-      <v-icon size="40">mdi-account</v-icon>
-    </v-avatar>
+      <v-spacer/>
 
-    <div class="text-h6 font-weight-bold">
-      {{props.name}}
-    </div>
+      <v-btn
+        v-if="showAdmin"
+        icon="mdi-pincil"
+        size="small"
+        variant="text"
+      />
+      <v-btn
+        v-if="showAdmin"
+        icon="mdi-delete"
+        size="small"
+        variant="text"
+      />
+    </v-card-title>
+
+    <v-card-text class="text-center">
+      <v-avatar size="72" class="mb-3">
+        <v-icon size="44">mdi-account</v-icon>
+      </v-avatar>
+
+      <v-card-subtitle class="text-h6 font-wight-bold">
+        {{ props.name }}
+      </v-card-subtitle>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -32,8 +49,6 @@ const props = defineProps<{
   roleType: RoleType
 }>()
 
-const showRoleBadge = computed (() => appState.isParentMode)
-
-
+const showAdmin = computed( () => appState.isParentMode )
 
 </script>
