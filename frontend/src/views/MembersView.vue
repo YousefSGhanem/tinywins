@@ -41,6 +41,7 @@
         :color="member.color"
         :role-type="member.roleType"
         @edit="openEditDialog(member.id)"
+        @delete="openDeleteDialog(member.id)"
       />
     </v-col>
   </v-row>
@@ -77,6 +78,22 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+  <v-dialog v-model="deleteDialogOpen" maxWidth="420">
+    <v-card>
+      <v-card-title class="d-flex alighn-center">
+        <v-icon class="mr-2">mdi-alert</v-icon>
+        Delete Member
+      </v-card-title>
+      <v-card-text>
+        Are you sure you want to delete this member?
+      </v-card-text>
+      <v-card-actions>
+        <v-spacer/>
+        <v-btn variant="text" @click="closeDeleteDialog">Cancel</v-btn>
+        <v-btn color="error" variant="flat" @click="confirmDeleteMember">Delete</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 
@@ -107,7 +124,8 @@ const colorItems = ['primary', 'secondary', 'accent']
 const editingMemberId = ref<string | null>(null)
 const isEditing = computed(() => editingMemberId.value !== null)
 
-
+const deleteDialogOpen = ref(false)
+const deletingMemberId = ref< string | null> (null)
 
 function openCreateDialog() {
   form.name = ''
@@ -126,6 +144,26 @@ function openEditDialog(memberId: string) {
   form.roleType = member.roleType
   editingMemberId.value = memberId
   dialogOpen.value = true
+}
+
+function openDeleteDialog(memberId: string) {
+  deletingMemberId.value = memberId
+  deleteDialogOpen.value = true
+}
+
+function closeDeleteDialog(){
+  deletingMemberId.value = null
+  deleteDialogOpen.value = false
+}
+
+function confirmDeleteMember() {
+  if (!deletingMemberId.value) return
+
+  membersState.members = membersState.members.filter(
+    member => member.id !== deletingMemberId.value
+  )
+
+  closeDeleteDialog()
 }
 
 function closeDialog() {
@@ -152,6 +190,8 @@ function saveMember() {
       roleType: form.roleType,
     })
   }
+
+
   editingMemberId.value = null
   closeDialog()
 }

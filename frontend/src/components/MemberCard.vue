@@ -16,6 +16,7 @@
         v-if="showAdmin"
         icon="mdi-pencil"
         size="small"
+        color="white"
         variant="text"
         @click="$emit('edit')"
       />
@@ -24,6 +25,7 @@
         icon="mdi-delete"
         size="small"
         variant="text"
+        @click="$emit('delete')"
       />
     </v-card-title>
 
@@ -50,7 +52,7 @@ const props = defineProps<{
   roleType: RoleType
 }>()
 
-defineEmits(['edit'])
+defineEmits(['edit', 'delete'])
 
 const showAdmin = computed( () => appState.isParentMode )
 
