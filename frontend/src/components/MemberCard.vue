@@ -14,9 +14,10 @@
 
       <v-btn
         v-if="showAdmin"
-        icon="mdi-pincil"
+        icon="mdi-pencil"
         size="small"
         variant="text"
+        @click="$emit('edit')"
       />
       <v-btn
         v-if="showAdmin"
@@ -48,6 +49,8 @@ const props = defineProps<{
   color: string,
   roleType: RoleType
 }>()
+
+defineEmits(['edit'])
 
 const showAdmin = computed( () => appState.isParentMode )
 

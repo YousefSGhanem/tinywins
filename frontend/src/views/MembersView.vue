@@ -40,6 +40,7 @@
         :name="member.name"
         :color="member.color"
         :role-type="member.roleType"
+        @edit="openEditDialog(member.id)"
       />
     </v-col>
   </v-row>
@@ -47,7 +48,7 @@
     <v-card>
       <v-card-title class="d-flex alighn-center">
         <v-icon class="mr-2">mdi-account-plus</v-icon>
-        Add Member
+        {{ isEditing ? 'Edit Member' : 'Add Member' }}
       </v-card-title>
 
       <v-card-text>
@@ -65,7 +66,7 @@
         <v-select
           v-model="form.color"
           label="Color"
-          :items="coloerItems"
+          :items="colorItems"
         />
       </v-card-text>
 
@@ -101,12 +102,29 @@ const form = reactive<Pick<Member, 'name' | 'color' | 'roleType'>>({
 })
 
 const roleItems: RoleType[] = ['CHILD', 'PARENT']
-const coloerItems = ['primary', 'secondary', 'accent']
+const colorItems = ['primary', 'secondary', 'accent']
+
+const editingMemberId = ref<string | null>(null)
+const isEditing = computed(() => editingMemberId.value !== null)
+
+
 
 function openCreateDialog() {
   form.name = ''
   form.color= 'secondary'
   form.roleType = 'CHILD'
+  editingMemberId.value = null
+  dialogOpen.value = true
+}
+
+function openEditDialog(memberId: string) {
+  const member = membersState.members.find(m => m.id === memberId)
+  if (!member) return
+
+  form.name = member.name
+  form.color = member.color
+  form.roleType = member.roleType
+  editingMemberId.value = memberId
   dialogOpen.value = true
 }
 
@@ -116,17 +134,25 @@ function closeDialog() {
 
 function saveMember() {
   const trimmedName= form.name.trim()
-
   if(!trimmedName) return
 
-  const newMember: Member= {
-    id: crypto.randomUUID(),
-    name: trimmedName,
-    color: form.color,
-    roleType: form.roleType,
+  if (editingMemberId.value) {
+    // Edit mode
+    const member = membersState.members.find(m => m.id === editingMemberId.value)
+    if(!member) return
+    member.name= trimmedName
+    member.color = form.color
+    member.roleType = form.roleType
+  } else {
+    // Create mode
+    membersState.members.push({
+      id: crypto.randomUUID(),
+      name: trimmedName,
+      color: form.color,
+      roleType: form.roleType,
+    })
   }
-
-  membersState.members.push(newMember)
+  editingMemberId.value = null
   closeDialog()
 }
 
