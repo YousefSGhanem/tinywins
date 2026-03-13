@@ -47,7 +47,7 @@
   </v-row>
   <v-dialog v-model="dialogOpen" maxWidth="420">
     <v-card>
-      <v-card-title class="d-flex alighn-center">
+      <v-card-title class="d-flex align-center">
         <v-icon class="mr-2">mdi-account-plus</v-icon>
         {{ isEditing ? 'Edit Member' : 'Add Member' }}
       </v-card-title>
@@ -80,7 +80,7 @@
   </v-dialog>
   <v-dialog v-model="deleteDialogOpen" maxWidth="420">
     <v-card>
-      <v-card-title class="d-flex alighn-center">
+      <v-card-title class="d-flex align-center">
         <v-icon class="mr-2">mdi-alert</v-icon>
         Delete Member
       </v-card-title>

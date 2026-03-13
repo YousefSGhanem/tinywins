@@ -34,7 +34,7 @@
         <v-icon size="44">mdi-account</v-icon>
       </v-avatar>
 
-      <v-card-subtitle class="text-h6 font-wight-bold">
+      <v-card-subtitle class="text-h6 font-weight-bold">
         {{ props.name }}
       </v-card-subtitle>
     </v-card-text>
