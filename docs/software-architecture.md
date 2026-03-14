@@ -8,7 +8,7 @@ TinyWins is a family-focused web application designed to be used on a shared dev
 Parents manage members, tasks, races, and rewards, while children use the application to view tasks and track their progress.
 The system stores all application data in a PostgreSQL database.
 
-![System Overview](docs/architecture/system-overview.png)
+![System Overview](architecture/system-overview.png)
 
 <br>
 
@@ -22,7 +22,7 @@ The frontend is implemented as a Vue 3 single-page application running in the br
 The frontend communicates with a Spring Boot backend through REST APIs over HTTP.  
 The backend contains the business logic and persists data in a PostgreSQL database using JPA.
 
-![High Level Architecture](docs/architecture/high-level-architecture.png)
+![High Level Architecture](architecture/high-level-architecture.png)
 
 <br>
 
@@ -38,7 +38,7 @@ Some components also read shared state directly and use model types for props an
 
 The UI framework is provided by Vuetify, which is used by both views and components.
 
-![Frontend Architecture](docs/architecture/frontend-architecture.png)
+![Frontend Architecture](architecture/frontend-architecture.png)
 
 <br>
 
@@ -53,7 +53,7 @@ Services contain the core business logic and use repositories for data access.
 Repositories provide data access and interact with the PostgreSQL database using JPA. 
 Mappers are used to transform data between DTOs and entities, allowing the API layer to remain separated from the persistence model.
 
-![Backend Architecture](docs/architecture/backend-architecture.png)
+![Backend Architecture](architecture/backend-architecture.png)
 
 <br>
 
@@ -68,4 +68,4 @@ Race participants connect members to a race, while tasks are assigned to individ
 
 The model reflects the core business structure of TinyWins and forms the basis of the backend persistence layer.
 
-![Domain Model](docs/architecture/domain-model.png)
+![Domain Model](architecture/domain-model.png)
