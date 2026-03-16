@@ -3,7 +3,7 @@
     :color="props.color"
     elevation="6"
     rounded="xl"
-    class="pa-3">
+    class="pa-3 member-card">
     <v-card-item >
       <template #prepend>
         <v-chip
@@ -86,3 +86,19 @@ const avatarIconMap: Record<AvatarKey, string> = {
 const avatarIcon = computed(() => avatarIconMap[props.avatarKey])
 
 </script>
+
+<style scoped>
+.member-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    filter 0.2s ease;
+  cursor: pointer;
+}
+
+.member-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+  filter: brightness(1.02);
+}
+</style>
