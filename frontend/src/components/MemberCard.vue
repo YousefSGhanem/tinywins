@@ -1,42 +1,60 @@
 <template>
-  <v-card :color="props.color" elevation="4">
-    <v-card-title class="d-flex align-center">
-      <v-chip
-        v-if="showAdmin"
-        size="small"
-        variant="tonal"
-        color="soft-background"
+  <v-card
+    :color="props.color"
+    elevation="6"
+    rounded="xl"
+    class="pa-3">
+    <v-card-item >
+      <template #prepend>
+        <v-chip
+          v-if="showAdmin"
+          size="small"
+          variant="tonal"
+          color="soft-background"
+          >
+          {{ props.roleType }}
+        </v-chip>
+      </template>
+
+      <template #append>
+        <v-btn
+          v-if="showAdmin"
+          icon="mdi-pencil"
+          size="small"
+          variant="text"
+          color="text-primary"
+          @click="$emit('edit')"
+        />
+        <v-btn
+          v-if="showAdmin"
+          icon="mdi-delete"
+          size="small"
+          variant="text"
+          color="text-primary"
+          @click="$emit('delete')"
+        />
+      </template>
+    </v-card-item>
+
+    <v-card-text class="d-flex flex-column align-center justify-center text-center py-6">
+      <v-avatar
+        size="88"
+        color="surface"
+        class="mb-4"
       >
-        {{ props.roleType}}
-      </v-chip>
-
-      <v-spacer/>
-
-      <v-btn
-        v-if="showAdmin"
-        icon="mdi-pencil"
-        size="small"
-        color="white"
-        variant="text"
-        @click="$emit('edit')"
-      />
-      <v-btn
-        v-if="showAdmin"
-        icon="mdi-delete"
-        size="small"
-        variant="text"
-        @click="$emit('delete')"
-      />
-    </v-card-title>
-
-    <v-card-text class="text-center">
-      <v-avatar size="72" class="mb-3">
-        <v-icon size="44">mdi-account</v-icon>
+        <v-icon size="48" color="primary">
+          {{ avatarIcon }}
+        </v-icon>
       </v-avatar>
 
-      <v-card-subtitle class="text-h6 font-weight-bold">
-        {{ props.name }}
-      </v-card-subtitle>
+      <v-sheet
+        color="transparent"
+        rounded="lg"
+      >
+        <v-card-title class="text-h6 font-weight-bold justify-center pa-0">
+          {{ props.name }}
+        </v-card-title>
+      </v-sheet>
     </v-card-text>
   </v-card>
 </template>
@@ -44,16 +62,27 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { appState } from '../state/appState'
-import type { RoleType } from '../models/Member'
+import type {AvatarKey, RoleType} from '../models/Member'
 
 const props = defineProps<{
   name: string,
   color: string,
   roleType: RoleType
+  avatarKey: AvatarKey
 }>()
 
 defineEmits(['edit', 'delete'])
-
 const showAdmin = computed( () => appState.isParentMode )
+
+const avatarIconMap: Record<AvatarKey, string> = {
+  star: 'mdi-star',
+  rocket: 'mdi-rocket-launch',
+  heart: 'mdi-heart',
+  paw: 'mdi-paw',
+  crown: 'mdi-crown',
+  lightning: 'mdi-lightning-bolt',
+}
+
+const avatarIcon = computed(() => avatarIconMap[props.avatarKey])
 
 </script>
