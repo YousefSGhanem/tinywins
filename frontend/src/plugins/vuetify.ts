@@ -1,7 +1,16 @@
 import 'vuetify/styles'
+import '@mdi/font/css/materialdesignicons.css'
 import { createVuetify } from 'vuetify'
+import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
 export default createVuetify({
+  icons: {
+    defaultSet: 'mdi',
+    aliases,
+    sets: {
+      mdi,
+    },
+  },
   theme: {
     defaultTheme: 'tinywins',
     themes: {
@@ -21,8 +30,8 @@ export default createVuetify({
 
           'text-primary': '#2E2E2E',
           'divider-color': '#EBEBEB',
-        }
-      }
-    }
-  }
+        },
+      },
+    },
+  },
 })
