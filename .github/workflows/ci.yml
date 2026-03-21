@@ -21,7 +21,14 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
 
       - name: Install frontend dependencies
         run: npm ci
@@ -32,6 +39,7 @@ jobs:
   backend-build:
     name: Backend Build
     runs-on: ubuntu-latest
+
     defaults:
       run:
         working-directory: ./backend
@@ -43,9 +51,9 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '17'
-          cache: 'maven'
+          cache: maven
 
       - name: Build backend
         run: ./mvnw clean package
