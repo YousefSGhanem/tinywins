@@ -25,11 +25,17 @@ export default createVuetify({
 
           background: '#F7F8FA',
           surface: '#FFFFFF',
-
           'soft-background': '#F0EDFF',
 
           'text-primary': '#2E2E2E',
           'divider-color': '#EBEBEB',
+
+          'member-parent': '#52489C',
+          'member-teal': '#59C3C3',
+          'member-coral': '#F45B69',
+          'member-purple': '#6C63C7',
+          'member-sun': '#F6C945',
+          'member-mint': '#7DD8B6',
         },
       },
     },

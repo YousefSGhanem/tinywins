@@ -8,10 +8,18 @@ export type AvatarKey =
   | 'lightning'
   | 'crown'
 
+export type MemberColor =
+  | 'member-parent'
+  | 'member-teal'
+  | 'member-coral'
+  | 'member-purple'
+  | 'member-sun'
+  | 'member-mint'
+
 export interface Member {
   id: string
   name: string
-  color: string
+  color: MemberColor
   roleType: RoleType
   avatarKey: AvatarKey
 }

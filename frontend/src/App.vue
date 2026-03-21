@@ -17,7 +17,7 @@
 
         <v-btn
           variant="flat"
-          :color="appState.isParentMode ? 'accent' : 'primary'"
+          :color="appState.isParentMode ? 'secondary' : 'primary'"
           @click="onModeButtonClick"
         >
           {{ modeActionLabel }}

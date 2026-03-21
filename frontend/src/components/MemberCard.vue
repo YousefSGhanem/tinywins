@@ -22,7 +22,7 @@
           icon="mdi-pencil"
           size="small"
           variant="text"
-          color="text-primary"
+          color="surface"
           @click="$emit('edit')"
         />
         <v-btn
@@ -30,7 +30,7 @@
           icon="mdi-delete"
           size="small"
           variant="text"
-          color="text-primary"
+          color="surface"
           @click="$emit('delete')"
         />
       </template>
@@ -42,7 +42,7 @@
         color="surface"
         class="mb-4"
       >
-        <v-icon size="48" color="primary">
+        <v-icon size="48" color="text-primary">
           {{ avatarIcon }}
         </v-icon>
       </v-avatar>

@@ -65,7 +65,11 @@
           :items="roleItems"
         />
 
-        <v-sheet color="transparent" class="mt-2">
+        <v-sheet
+          v-if="form.roleType === 'CHILD'"
+          color="transparent"
+          class="mt-2"
+        >
           <v-label class="mb-2 d-block">Color</v-label>
           <v-chip-group
             v-model="form.color"
@@ -79,7 +83,8 @@
               :color="color.value"
               variant="flat"
               size="large"
-              class="mr-2">
+              class="mr-2"
+            >
               {{ color.label }}
             </v-chip>
           </v-chip-group>
@@ -136,7 +141,7 @@ import MemberCard from '../components/MemberCard.vue'
 import {computed, ref, reactive} from 'vue'
 import {appState} from '../state/appState'
 import {membersState} from '../state/membersState'
-import type {Member, RoleType, AvatarKey}  from '../models/Member'
+import type { Member, RoleType, AvatarKey, MemberColor } from '../models/Member'
 
 const visibleMembers = computed(() => {
   if( appState.isParentMode) return membersState.members
@@ -148,16 +153,18 @@ const dialogOpen = ref(false)
 
 const form = reactive<Pick<Member, 'name' | 'color' | 'roleType' | 'avatarKey'>>({
   name: '',
-  color: 'secondary',
+  color: 'member-teal',
   roleType: 'CHILD',
-  avatarKey: 'star'
+  avatarKey: 'star',
 })
 
 const roleItems: RoleType[] = ['CHILD', 'PARENT']
-const colorItems = [
-  { label: 'Purple', value: 'primary' },
-  { label: 'Turquoise', value: 'secondary' },
-  { label: 'Coral', value: 'accent' },
+const colorItems: { label: string; value: MemberColor }[] = [
+  { label: 'Teal', value: 'member-teal' },
+  { label: 'Coral', value: 'member-coral' },
+  { label: 'Purple', value: 'member-purple' },
+  { label: 'Sun', value: 'member-sun' },
+  { label: 'Mint', value: 'member-mint' },
 ]
 
 const avatarItems: { label: string; value: AvatarKey; icon: string}[] = [
@@ -177,7 +184,7 @@ const deletingMemberId = ref< string | null> (null)
 
 function openCreateDialog() {
   form.name = ''
-  form.color= 'secondary'
+  form.color = 'member-teal'
   form.roleType = 'CHILD'
   form.avatarKey = 'star'
   editingMemberId.value = null
@@ -225,28 +232,29 @@ function closeDialog() {
 }
 
 function saveMember() {
-  const trimmedName= form.name.trim()
-  if(!trimmedName) return
+  const trimmedName = form.name.trim()
+  if (!trimmedName) return
+
+  const resolvedColor: MemberColor =
+    form.roleType === 'PARENT' ? 'member-parent' : form.color
 
   if (editingMemberId.value) {
-    // Edit mode
     const member = membersState.members.find(m => m.id === editingMemberId.value)
-    if(!member) return
-    member.name= trimmedName
-    member.color = form.color
+    if (!member) return
+
+    member.name = trimmedName
+    member.color = resolvedColor
     member.roleType = form.roleType
-    member.avatarKey= form.avatarKey
+    member.avatarKey = form.avatarKey
   } else {
-    // Create mode
     membersState.members.push({
       id: crypto.randomUUID(),
       name: trimmedName,
-      color: form.color,
+      color: resolvedColor,
       roleType: form.roleType,
-      avatarKey: form.avatarKey
+      avatarKey: form.avatarKey,
     })
   }
-
 
   editingMemberId.value = null
   closeDialog()
